@@ -6,8 +6,9 @@ const logger = config.logger.createLogger('sample/routes');
 
 const router = require('express').Router();
 
-const crudObject = require(path.join(__dirname, 'crud.js'));
 const validationObject = require(path.join(__dirname, 'validations.js'));
+const crudObject = require(path.join(__dirname, 'crud.js'));
+const dataObject = require(path.join(__dirname, 'data.js'));
 
 router.get('/',
   crudObject.greetUser,
@@ -18,6 +19,7 @@ router.get('/',
 router.get('/sqr/:number',
   validationObject.validateSquareNumber,
   crudObject.squareNumber,
+  dataObject.storeNumber,
   function (req, res, next) {
     res.send(req.tempData.result);
   });

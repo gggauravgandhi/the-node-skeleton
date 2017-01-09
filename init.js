@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const path = require('path');
+const mongoose = require('mongoose');
+const Promise = require('bluebird');
 
 module.exports.init = function init() {
 
@@ -24,6 +26,10 @@ module.exports.init = function init() {
   const config = require(path.join(__dirname, '/config/index.js'));
   const appRouter = require(path.join(__dirname, '/routes.js'));
   const logger = config.logger.createLogger('init');
+
+  // Mongoose config
+  mongoose.Promise = Promise;
+  mongoose.connect(config.app.mongodb.URI);
 
   // Router mounting
   app.use('/', appRouter);
